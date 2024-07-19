@@ -1,4 +1,4 @@
-package com.joinzad.interviewcase.model;
+package com.zadApp.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

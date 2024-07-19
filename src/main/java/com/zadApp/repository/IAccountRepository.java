@@ -1,6 +1,6 @@
-package com.joinzad.interviewcase.repository;
+package com.zadApp.repository;
 
-import com.joinzad.interviewcase.model.AccountModel;
+import com.zadApp.model.AccountModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

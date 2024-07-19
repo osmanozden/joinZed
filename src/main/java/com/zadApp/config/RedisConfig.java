@@ -1,4 +1,4 @@
-package com.joinzad.interviewcase.config;
+package com.zadApp.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

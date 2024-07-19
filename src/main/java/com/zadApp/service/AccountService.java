@@ -1,9 +1,9 @@
-package com.joinzad.interviewcase.service;
+package com.zadApp.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.joinzad.interviewcase.model.AccountModel;
-import com.joinzad.interviewcase.repository.IAccountRepository;
+import com.zadApp.model.AccountModel;
+import com.zadApp.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;

@@ -1,6 +1,6 @@
-package com.joinzad.interviewcase.controller;
+package com.zadApp.controller;
 
-import com.joinzad.interviewcase.service.AccountService;
+import com.zadApp.service.AccountService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

@@ -1,6 +1,6 @@
-package com.joinzad.interviewcase.repository;
+package com.zadApp.repository;
 
-import com.joinzad.interviewcase.model.UserModel;
+import com.zadApp.model.UserModel;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface IUserRepository extends JpaRepository<UserModel, Long> {
