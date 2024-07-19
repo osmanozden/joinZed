@@ -7,22 +7,11 @@ import jakarta.persistence.Id;
 
 
 @Entity
-public class AccountModel {
+public class AccountModel extends BaseModel {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     private Long userId;
     private String currency;
     private Double balance;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getUserId() {
         return userId;
