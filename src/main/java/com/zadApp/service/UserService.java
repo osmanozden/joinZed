@@ -32,7 +32,7 @@ public class UserService {
         Account usdAccount = new Account();
         usdAccount.setUserId(savedUser.getId());
         usdAccount.setCurrency("USD");
-        usdAccount.setBalance(0.0);
+        usdAccount.setBalance(100.0);
         accountRepository.save(usdAccount);
 
         Account tryAccount = new Account();
