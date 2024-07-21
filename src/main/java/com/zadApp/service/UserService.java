@@ -24,7 +24,7 @@ public class UserService {
     }
 
     @Transactional
-    public User createUserWithAccount(String name, double usdBalance, double tryBalance) {
+    public User createUserWithAccount(String name) {
         User user = new User();
         user.setName(name);
         User savedUser = userRepository.save(user);
@@ -32,13 +32,13 @@ public class UserService {
         Account usdAccount = new Account();
         usdAccount.setUserId(savedUser.getId());
         usdAccount.setCurrency("USD");
-        usdAccount.setBalance(usdBalance);
+        usdAccount.setBalance(0.0);
         accountRepository.save(usdAccount);
 
         Account tryAccount = new Account();
         tryAccount.setUserId(savedUser.getId());
         tryAccount.setCurrency("TRY");
-        tryAccount.setBalance(tryBalance);
+        tryAccount.setBalance(0.0);
         accountRepository.save(tryAccount);
 
         return savedUser;

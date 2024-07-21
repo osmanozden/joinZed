@@ -12,6 +12,11 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long userId;
+    private String currency;
+    private Double balance;
+
+
     public Long getId() {
         return id;
     }
@@ -19,10 +24,6 @@ public class Account {
     public void setId(Long id) {
         this.id = id;
     }
-
-    private Long userId;
-    private String currency;
-    private Double balance;
 
     public Long getUserId() {
         return userId;

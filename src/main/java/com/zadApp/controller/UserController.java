@@ -26,10 +26,8 @@ public class UserController {
 
     @PostMapping("/create")
     @Operation(summary = "Create a new user")
-    public ResponseEntity<User> createUser(@RequestParam String name,
-                                           @RequestParam double usdBalance,
-                                           @RequestParam double tryBalance) {
-        User user = userService.createUserWithAccount(name, usdBalance, tryBalance);
+    public ResponseEntity<User> createUser(@RequestParam String name) {
+        User user = userService.createUserWithAccount(name);
         return ResponseEntity.ok(user);
     }
 

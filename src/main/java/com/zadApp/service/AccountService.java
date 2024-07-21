@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.zadApp.model.Account;
 import com.zadApp.repository.IAccountRepository;
+import com.zadApp.util.ExchangeRateApiClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,8 @@ public class AccountService {
 
     @Autowired
     private IAccountRepository accountRepository;
+
+    private ExchangeRateApiClient exchangeRateApiClient;
 
     @Autowired
     private KafkaTemplate<String, String> kafkaTemplate;
@@ -68,7 +71,7 @@ public class AccountService {
             Account fromAccount = fromAccountOpt.get();
             Account toAccount = toAccountOpt.get();
             if (fromAccount.getBalance() >= amount) {
-                double rate = getExchangeRate(fromCurrency, toCurrency);
+                double rate = exchangeRateApiClient.getExchangeRate(fromCurrency, toCurrency);
                 fromAccount.setBalance(fromAccount.getBalance() - amount);
                 toAccount.setBalance(toAccount.getBalance() + (amount * rate));
                 accountRepository.save(fromAccount);
@@ -84,16 +87,5 @@ public class AccountService {
         return fromCurrency;
     }
 
-    private double getExchangeRate(String fromCurrency, String toCurrency) throws IOException {
-        String url = String.format("%s/latest/%s", exchangeRateApiUrl, fromCurrency);
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
-        if (response.getStatusCode() == HttpStatus.OK) {
-            JsonNode root = new ObjectMapper().readTree(response.getBody());
-            return root.path("rates").path(toCurrency).asDouble();
-        } else {
-            throw new IOException("Failed to retrieve exchange rate");
-        }
-    }
 }
 
