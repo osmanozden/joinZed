@@ -30,4 +30,9 @@ curl -X POST "http://localhost:8080/accounts/deposit" \
 -d "amount=100.00"
 ---------------------------
 
+curl -X POST "http://localhost:8080/users/create" \
+-H "Content-Type: application/json" \
+-d '{"name":"Alice", "usdBalance":1500.00, "tryBalance":3000.00}'
+
+-------------------------------
 

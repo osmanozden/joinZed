@@ -60,7 +60,7 @@ public class AccountService {
         return accountOpt.map(Account::getBalance).orElse(0.0);
     }
 
-    public void exchange(Long userId, String fromCurrency, String toCurrency, Double amount) throws IOException {
+    public String exchange(Long userId, String fromCurrency, String toCurrency, Double amount) throws IOException {
         Optional<Account> fromAccountOpt = accountRepository.findByUserIdAndCurrency(userId, fromCurrency);
         Optional<Account> toAccountOpt = accountRepository.findByUserIdAndCurrency(userId, toCurrency);
 
@@ -79,7 +79,9 @@ public class AccountService {
             }
         } else {
             kafkaTemplate.send("account-events", "Account not found for user " + userId);
+            return "Account not found for user " + userId;
         }
+        return fromCurrency;
     }
 
     private double getExchangeRate(String fromCurrency, String toCurrency) throws IOException {
