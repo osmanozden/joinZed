@@ -23,6 +23,7 @@ public class AccountService {
     @Autowired
     private IAccountRepository accountRepository;
 
+    @Autowired
     private ExchangeRateApiClient exchangeRateApiClient;
 
     @Autowired
