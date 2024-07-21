@@ -6,17 +6,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public abstract class BaseModel {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Override
-    public String toString() {
-        return "BaseModel{" +
-                "id=" + id +
-                '}';
-    }
 
     public Long getId() {
         return id;
@@ -24,5 +17,15 @@ public abstract class BaseModel {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

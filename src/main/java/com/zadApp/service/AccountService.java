@@ -2,7 +2,7 @@ package com.zadApp.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zadApp.model.AccountModel;
+import com.zadApp.model.Account;
 import com.zadApp.repository.IAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,11 +28,11 @@ public class AccountService {
     private String exchangeRateApiUrl;
 
     public void deposit(Long userId, String currency, Double amount) {
-        Optional<AccountModel> accountOpt = accountRepository.findByUserIdAndCurrency(userId, currency);
+        Optional<Account> accountOpt = accountRepository.findByUserIdAndCurrency(userId, currency);
         if (accountOpt.isPresent()) {
-            AccountModel accountModel = accountOpt.get();
-            accountModel.setBalance(accountModel.getBalance() + amount);
-            accountRepository.save(accountModel);
+            Account account = accountOpt.get();
+            account.setBalance(account.getBalance() + amount);
+            accountRepository.save(account);
             kafkaTemplate.send("account-events", "Deposit successful for user " + userId);
         } else {
             kafkaTemplate.send("account-events", "Account not found for user " + userId);
@@ -40,9 +40,9 @@ public class AccountService {
     }
 
     public void withdraw(Long userId, String currency, Double amount) {
-        Optional<AccountModel> accountOpt = accountRepository.findByUserIdAndCurrency(userId, currency);
+        Optional<Account> accountOpt = accountRepository.findByUserIdAndCurrency(userId, currency);
         if (accountOpt.isPresent()) {
-            AccountModel account = accountOpt.get();
+            Account account = accountOpt.get();
             if (account.getBalance() >= amount) {
                 account.setBalance(account.getBalance() - amount);
                 accountRepository.save(account);
@@ -56,17 +56,17 @@ public class AccountService {
     }
 
     public Double getBalance(Long userId, String currency) {
-        Optional<AccountModel> accountOpt = accountRepository.findByUserIdAndCurrency(userId, currency);
-        return accountOpt.map(AccountModel::getBalance).orElse(0.0);
+        Optional<Account> accountOpt = accountRepository.findByUserIdAndCurrency(userId, currency);
+        return accountOpt.map(Account::getBalance).orElse(0.0);
     }
 
     public void exchange(Long userId, String fromCurrency, String toCurrency, Double amount) throws IOException {
-        Optional<AccountModel> fromAccountOpt = accountRepository.findByUserIdAndCurrency(userId, fromCurrency);
-        Optional<AccountModel> toAccountOpt = accountRepository.findByUserIdAndCurrency(userId, toCurrency);
+        Optional<Account> fromAccountOpt = accountRepository.findByUserIdAndCurrency(userId, fromCurrency);
+        Optional<Account> toAccountOpt = accountRepository.findByUserIdAndCurrency(userId, toCurrency);
 
         if (fromAccountOpt.isPresent() && toAccountOpt.isPresent()) {
-            AccountModel fromAccount = fromAccountOpt.get();
-            AccountModel toAccount = toAccountOpt.get();
+            Account fromAccount = fromAccountOpt.get();
+            Account toAccount = toAccountOpt.get();
             if (fromAccount.getBalance() >= amount) {
                 double rate = getExchangeRate(fromCurrency, toCurrency);
                 fromAccount.setBalance(fromAccount.getBalance() - amount);
