@@ -59,7 +59,7 @@ public class AccountController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/getAllAccounts")
     @Operation(summary = "Get all accounts")
     public ResponseEntity<List<Account>> getAllAccounts() {
         List<Account> accounts = accountService.findAllAccounts();
