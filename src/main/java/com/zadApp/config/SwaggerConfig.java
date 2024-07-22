@@ -27,4 +27,5 @@ public class SwaggerConfig {
                 .pathsToMatch("/accounts/**")
                 .build();
     }
+
 }
